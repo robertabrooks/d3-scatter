@@ -1,4 +1,3 @@
-
 var margin = {top: 20, right: 20, bottom: 30, left: 50};
     var w = 750 - margin.left - margin.right;
     var h = 400 - margin.top - margin.bottom;
@@ -20,6 +19,14 @@ var data = [
 ];
 var dataset = data;
 var col = d3.scale.category10();
+
+var format = d3.time.format("%b %Y");
+d3.csv("stocks.csv",function(error,stocks){ 
+  if(error) return console.warn(error);
+    stocks.forEach(function(d) {
+      d.price = +d.price;
+      d.date = format.parse(d.date);
+  });
 
 var svg = d3.select("body").append("svg")
     .attr("width", w + margin.left + margin.right)
@@ -102,6 +109,8 @@ function drawVis(data) {
   .on("mouseout", function(d,i){d3.select(this).attr("r",4)})
 
 }
+
+
 
 
 
